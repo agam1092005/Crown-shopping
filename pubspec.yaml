@@ -1,0 +1,55 @@
+name: crown_shopping
+description: A new Shopping App.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^0.1.3
+  flutter_rating_bar: ^3.0.1+1
+  carousel_slider: ^3.0.0
+  provider: ^4.3.2
+  flutter_spinkit: ^4.1.2+1
+  firebase_auth: ^0.20.0+1
+  cloud_firestore: ^0.16.0
+  form_field_validator: ^1.0.1
+  image_picker: ^0.6.7+22
+  shared_preferences: ^0.5.12+4
+  random_string: ^2.1.0
+  shimmer: ^1.1.2
+  shimmer_animation: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - images/
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+    - family: PollerOne
+      fonts:
+        - asset: fonts/PollerOne-Regular.ttf
+    - family: Inconsolata
+      fonts:
+        - asset: fonts/Inconsolata-Regular.ttf
+    - family: EmblemaOne
+      fonts:
+        - asset: fonts/EmblemaOne-Regular.ttf
+    - family: Bungee
+      fonts:
+        - asset: fonts/Bungee-Regular.ttf

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4088510097",
+    "project_id": "crown-shopping-69da0",
+    "storage_bucket": "crown-shopping-69da0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4088510097:android:58c667817d554a50163130",
+        "android_client_info": {
+          "package_name": "com.crown.crown_shopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4088510097-bfuf4g1d8ugd48nf16bkl6ejhrpjlmc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRorA0wBdb_crIh1hnJfQmi6w74lVsSH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4088510097-bfuf4g1d8ugd48nf16bkl6ejhrpjlmc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
