@@ -33,7 +33,3 @@ const DrawerTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
   fontSize: 20,
 );
-
-
-
-

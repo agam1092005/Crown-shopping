@@ -22,6 +22,7 @@ dependencies:
   form_field_validator: ^1.0.1
   image_picker: ^0.6.7+22
   shared_preferences: ^0.5.12+4
+  flutter_local_notifications: ^4.0.0
   random_string: ^2.1.0
   shimmer: ^1.1.2
   shimmer_animation: ^1.0.0

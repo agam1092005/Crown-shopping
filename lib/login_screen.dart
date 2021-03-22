@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:crown_shopping/Additional%20Pages/Extra%20loading_screen.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'ID/sign_in_screen.dart';
 import 'ID/sign_up_screen.dart';
 import 'package:flutter/animation.dart';
@@ -14,15 +17,39 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginscreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
+  FlutterLocalNotificationsPlugin localNotification;
   AnimationController controller;
   Animation<double> animation;
 
   initState() {
     super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+        new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
     controller = AnimationController(
         duration: const Duration(microseconds: 400000), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
     controller.forward();
+  }
+
+  Future _shownotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      'Shop latest trends with Crown',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails);
+    await localNotification.show(
+        0, 'Crown', 'Shop latest trend with Crown', generalNotificationDetails);
   }
 
   @override
@@ -200,7 +227,10 @@ class _LoginscreenState extends State<LoginScreen>
                           width: MediaQuery.of(context).size.width * 0.25,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Timer(Duration(seconds: 5), () => _shownotification(),
+                            );
+                          },
                           child: CircleAvatar(
                             radius: 35,
                             backgroundImage: AssetImage('images/google.png'),

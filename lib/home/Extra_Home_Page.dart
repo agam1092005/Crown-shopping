@@ -1,4 +1,4 @@
-import 'file:///D:/PROJECTS/Flutter/crown_shopping/lib/Category%20Pages/Extra_category_page.dart';
+import 'package:crown_shopping/Category%20Pages/Extra_category_page.dart';
 import 'package:crown_shopping/ID/sign_in_screen.dart';
 import 'package:crown_shopping/ID/sign_up_screen.dart';
 import 'package:crown_shopping/Others/Constants.dart';
