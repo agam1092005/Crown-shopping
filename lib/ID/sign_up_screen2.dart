@@ -1,6 +1,7 @@
 import 'package:crown_shopping/Additional%20Pages/loading_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/Constants.dart';
@@ -14,8 +15,37 @@ class SignUpScreen2 extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen2> {
   final _auth = FirebaseAuth.instance;
   String email;
+  FlutterLocalNotificationsPlugin localNotification;
   String password;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+  Future _shownotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      '$email, successfully Registered',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(
+        0, 'Crown', '$email, successfully Registered', generalNotificationDetails);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +132,6 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                         MinLengthValidator(6,
                             errorText:
                                 'Password must be at least 6 digits long'),
-                        PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'Password must have at least one special character'),
                       ]),
                       obscureText: true,
                       cursorColor: Colors.black,
@@ -183,9 +212,11 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                             },
                             pageBuilder: (context, animation, animationTime) {
                               return LoadingScreen();
+
                             },
                           ),
                         );
+                        _shownotification();
                       }
                     } catch (e) {
                       print(e);

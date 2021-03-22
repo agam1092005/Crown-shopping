@@ -59,7 +59,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
-                      fontSize: 20,
+                      fontSize: 15,
                     ),
                   ),
                 ),

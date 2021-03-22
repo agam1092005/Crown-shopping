@@ -266,15 +266,11 @@ class _ExtraHomeState extends State<ExtraHome> {
                     Positioned(
                       bottom: 170,
                       right: 10,
-                      child: Hero(
-                        tag: "hero${homeList[index].imgPath}",
-                        child: Transform.rotate(
-                          angle: -math.pi / 7,
-                          child: Image(
-                            width: 220,
-                            image: AssetImage(
-                                "images/${homeList[index].imgPath}"),
-                          ),
+                      child: Transform.rotate(
+                        angle: -math.pi / 7,
+                        child: Image(
+                          width: 220,
+                          image: AssetImage('images/${homeList[index].imgPath}'),
                         ),
                       ),
                     ),
@@ -355,13 +351,9 @@ class _ExtraHomeState extends State<ExtraHome> {
                     ),
                     Positioned(
                       bottom: 140,
-                      child: Hero(
-                        tag: "hero${home2List[index].imgPath}",
-                        child: Image(
-                          width: 250,
-                          image: AssetImage(
-                              "images/${home2List[index].imgPath}"),
-                        ),
+                      child: Image(
+                        width: 220,
+                        image:  AssetImage('images/${home2List[index].imgPath}')
                       ),
                     ),
                   ],
@@ -442,13 +434,9 @@ class _ExtraHomeState extends State<ExtraHome> {
                     Positioned(
                       bottom: 120,
                       height: 180,
-                      child: Hero(
-                        tag: "hero${home3List[index].imgPath}",
-                        child: Image(
-                          width: 220,
-                          image: AssetImage(
-                              "images/${home3List[index].imgPath}"),
-                        ),
+                      child: Image(
+                        width: 220,
+                        image:  AssetImage('images/${home3List[index].imgPath}')
                       ),
                     ),
                   ],
@@ -464,7 +452,6 @@ class _ExtraHomeState extends State<ExtraHome> {
     );
   }
 }
-
 
 Widget _buildBackground(int index, double width) {
   List<HomeModel> homeList = HomeModel.list;
@@ -510,7 +497,6 @@ Widget _buildBackground(int index, double width) {
     ),
   );
 }
-
 
 Widget _buildBackground2(int index, double width) {
   List<HomeModel2> home2List = HomeModel2.list;

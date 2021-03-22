@@ -1,6 +1,7 @@
 import 'package:crown_shopping/Additional%20Pages/loading_screen.dart';
 import 'package:crown_shopping/ID/Reset_Password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +16,40 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _auth = FirebaseAuth.instance;
+  FlutterLocalNotificationsPlugin localNotification;
   String email;
   String password;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+  Future _shownotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      '$email, successfully logged In',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(
+        0, 'Crown', '$email, successfully logged In', generalNotificationDetails);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -204,6 +236,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                         ),
                       );
+                      _shownotification();
                     }
                   } catch (e) {
                     print(e);

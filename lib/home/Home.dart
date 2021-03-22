@@ -271,15 +271,11 @@ class _HomeState extends State<Home> {
                     Positioned(
                       bottom: 170,
                       right: 10,
-                      child: Hero(
-                        tag: "hero${homeList[index].imgPath}",
-                        child: Transform.rotate(
-                          angle: -math.pi / 7,
-                          child: Image(
-                            width: 220,
-                            image:
-                                AssetImage("images/${homeList[index].imgPath}"),
-                          ),
+                      child: Transform.rotate(
+                        angle: -math.pi / 7,
+                        child: Image(
+                          width: 220,
+                          image:  AssetImage('images/${homeList[index].imgPath}')
                         ),
                       ),
                     ),
@@ -357,13 +353,9 @@ class _HomeState extends State<Home> {
                     ),
                     Positioned(
                       bottom: 140,
-                      child: Hero(
-                        tag: "hero${home2List[index].imgPath}",
-                        child: Image(
-                          width: 250,
-                          image:
-                              AssetImage("images/${home2List[index].imgPath}"),
-                        ),
+                      child: Image(
+                        width: 220,
+                        image:  AssetImage('images/${home2List[index].imgPath}')
                       ),
                     ),
                   ],
@@ -441,13 +433,9 @@ class _HomeState extends State<Home> {
                     Positioned(
                       bottom: 120,
                       height: 180,
-                      child: Hero(
-                        tag: "hero${home3List[index].imgPath}",
-                        child: Image(
-                          width: 220,
-                          image:
-                              AssetImage("images/${home3List[index].imgPath}"),
-                        ),
+                      child: Image(
+                        width: 220,
+                        image: AssetImage('images/${home3List[index].imgPath}'),
                       ),
                     ),
                   ],

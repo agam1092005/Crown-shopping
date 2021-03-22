@@ -4,21 +4,22 @@ import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/Wallet/WalletShimmer.dart';
 import 'package:crown_shopping/login_screen.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/bgcolor.dart';
 
-class ProfilePage extends StatefulWidget {
+class FBProfilePage extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _FBProfilePageState createState() => _FBProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _FBProfilePageState extends State<FBProfilePage> {
   PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
+  static final FacebookLogin facebookSignIn = new FacebookLogin();
 
   void takePhoto(ImageSource source) async {
     // ignore: non_constant_identifier_names
@@ -145,7 +146,6 @@ class _ProfilePageState extends State<ProfilePage> {
       getData();
     });
 
-    final _auth = FirebaseAuth.instance;
     return Builder(
       builder: (context) => Container(
         child: ListView(
@@ -171,8 +171,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   backgroundImage: _imageFile == null
                       ? AssetImage('images/Profile.png')
                       : FileImage(
-                          File(_imageFile.path),
-                        ),
+                    File(_imageFile.path),
+                  ),
                 ),
                 Positioned(
                   bottom: 1,
@@ -199,7 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 40,
             ),
             Text(
-              'Email ID - $displayemail',
+              'FACEBOOK NAME -',
               style: TaglineTextStyle,
             ),
             SizedBox(
@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: 10,
                 ),
                 Text(
-                  'CROWN',
+                  'FACEBOOK',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -290,8 +290,8 @@ class _ProfilePageState extends State<ProfilePage> {
               style: AlertTextStyle,
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.05,
-              onPressed: () {
-                _auth.signOut();
+              onPressed: () async {
+                await facebookSignIn.logOut();
                 Navigator.pushAndRemoveUntil(
                     context,
                     PageRouteBuilder(
@@ -306,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         return LoginScreen();
                       },
                     ),
-                    (route) => false);
+                        (route) => false);
               },
             ),
             SizedBox(

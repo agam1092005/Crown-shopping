@@ -1,10 +1,12 @@
 import 'dart:async';
-
 import 'package:crown_shopping/Additional%20Pages/Extra%20loading_screen.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
+import 'package:crown_shopping/home/FB_Home_page.dart';
+import 'package:crown_shopping/home/Google_Home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'ID/sign_in_screen.dart';
 import 'ID/sign_up_screen.dart';
@@ -17,15 +19,43 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginscreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
-  FlutterLocalNotificationsPlugin localNotification;
   AnimationController controller;
+  static final FacebookLogin facebookSignIn = new FacebookLogin();
   Animation<double> animation;
+  FlutterLocalNotificationsPlugin localNotification;
+
+  Future<Null> _login() async {
+    final FacebookLoginResult result =
+    await facebookSignIn.logIn(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        final FacebookAccessToken accessToken = result.accessToken;
+        print('''
+         Logged in!
+         
+         Token: ${accessToken.token}
+         User id: ${accessToken.userId}
+         Expires: ${accessToken.expires}
+         Permissions: ${accessToken.permissions}
+         Declined permissions: ${accessToken.declinedPermissions}
+         ''');
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print('Login cancelled by the user.');
+        break;
+      case FacebookLoginStatus.error:
+        print('Something went wrong with the login process.\n'
+            'Here\'s the error Facebook gave us: ${result.errorMessage}');
+        break;
+    }
+  }
 
   initState() {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('crown');
     var initializeSettings =
-        new InitializationSettings(android: androidInitialize);
+    new InitializationSettings(android: androidInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializeSettings);
     controller = AnimationController(
@@ -34,11 +64,11 @@ class _LoginscreenState extends State<LoginScreen>
     controller.forward();
   }
 
-  Future _shownotification() async {
+  Future _shownotificationFB() async {
     var androidDetails = new AndroidNotificationDetails(
       'id',
       'Crown',
-      'Shop latest trends with Crown',
+      'FB USER, successfully Logged In',
       enableVibration: true,
       importance: Importance.high,
       playSound: true,
@@ -47,9 +77,27 @@ class _LoginscreenState extends State<LoginScreen>
       icon: 'crown',
     );
     var generalNotificationDetails =
-        new NotificationDetails(android: androidDetails);
+    new NotificationDetails(android: androidDetails);
     await localNotification.show(
-        0, 'Crown', 'Shop latest trend with Crown', generalNotificationDetails);
+        0, 'Crown', 'FB USER, successfully Logged In', generalNotificationDetails);
+  }
+
+  Future _shownotificationGOOGLE() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      'GOOGLE USER, successfully Logged In',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(
+        0, 'Crown', 'GOOGLE USER, successfully Logged In', generalNotificationDetails);
   }
 
   @override
@@ -217,7 +265,25 @@ class _LoginscreenState extends State<LoginScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _login();
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionsBuilder:
+                                    (context, animation, animationTime, child) {
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  );
+                                },
+                                pageBuilder: (context, animation, animationTime) {
+                                  return FBHomePage();
+                                },
+                              ),
+                            );
+                            _shownotificationFB();
+                          },
                           child: CircleAvatar(
                             radius: 35,
                             backgroundImage: AssetImage('images/facebook.png'),
@@ -228,8 +294,22 @@ class _LoginscreenState extends State<LoginScreen>
                         ),
                         GestureDetector(
                           onTap: () {
-                            Timer(Duration(seconds: 5), () => _shownotification(),
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                transitionsBuilder:
+                                    (context, animation, animationTime, child) {
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  );
+                                },
+                                pageBuilder: (context, animation, animationTime) {
+                                  return GoogleHomePage();
+                                },
+                              ),
                             );
+                            _shownotificationGOOGLE();
                           },
                           child: CircleAvatar(
                             radius: 35,

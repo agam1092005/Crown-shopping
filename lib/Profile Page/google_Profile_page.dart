@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/bgcolor.dart';
 
-class ProfilePage extends StatefulWidget {
+class GoogleProfilePage extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _GoogleProfilePageState createState() => _GoogleProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _GoogleProfilePageState extends State<GoogleProfilePage> {
   PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
 
@@ -171,8 +171,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   backgroundImage: _imageFile == null
                       ? AssetImage('images/Profile.png')
                       : FileImage(
-                          File(_imageFile.path),
-                        ),
+                    File(_imageFile.path),
+                  ),
                 ),
                 Positioned(
                   bottom: 1,
@@ -199,7 +199,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 40,
             ),
             Text(
-              'Email ID - $displayemail',
+              'Gmail ID - $displayemail',
               style: TaglineTextStyle,
             ),
             SizedBox(
@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: 10,
                 ),
                 Text(
-                  'CROWN',
+                  'GOOGLE',
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -306,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         return LoginScreen();
                       },
                     ),
-                    (route) => false);
+                        (route) => false);
               },
             ),
             SizedBox(
