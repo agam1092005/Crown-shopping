@@ -354,5 +354,6 @@ class _LoginscreenState extends State<LoginScreen>
     await _auth.signInWithCredential(authCredential);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('Googlename', _auth.currentUser.displayName);
+    _shownotificationGOOGLE();
   }
 }

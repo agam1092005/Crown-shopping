@@ -2,6 +2,7 @@ import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ResetPassword extends StatefulWidget {
@@ -13,6 +14,36 @@ class _ResetPasswordState extends State<ResetPassword> {
   final _auth = FirebaseAuth.instance;
   String email;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  FlutterLocalNotificationsPlugin localNotification;
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+
+  Future _showresetnotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      'Email sent to $email',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', 'Email sent to $email',
+        generalNotificationDetails);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,14 +126,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                 width: MediaQuery.of(context).size.width * 0.8,
                 height: MediaQuery.of(context).size.height * 0.05,
                 onPressed: () {
-                  try {
                     final user = _auth.sendPasswordResetEmail(email: email);
                     if (user != null && _formkey.currentState.validate()) {
                       Navigator.pop(context);
+                      _showresetnotification();
                     }
-                  } catch (e) {
-                    print(e);
-                  }
                 },
               ),
               SizedBox(

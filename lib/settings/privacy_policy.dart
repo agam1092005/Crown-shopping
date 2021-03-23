@@ -1,4 +1,7 @@
+import 'package:crown_shopping/Others/Constants.dart';
+import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicy extends StatefulWidget {
   @override
@@ -27,15 +30,15 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             Text(
               'Any personal information provided to or gathered by Crown under this Privacy Notice will be stored and controlled by Crown (the data controller / data fiduciary).',
               style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  ),
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
-             'What Personal Information About Customers Does Crown Gather?',
+              'What Personal Information About Customers Does Crown Gather?',
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
@@ -47,9 +50,9 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             Text(
               'The information we learn and gather from you, personal or otherwise, is used to register you for Crown direct Pay, verify your identity to permit you to use Crown direct Pay, undertake transactions (including to facilitate and process payments) in connection with Crown direct Pay, communicate with you about Crown direct Pay, any promotional offers, services or updates associated with Crown direct Pay, and generally maintain your accounts with us. We also use this information to customize your experience and improve Crown direct Pay, or to prevent or detect fraud or abuses of Crown direct Pay that are made available to you and to enable third parties to carry out technical, logistical, payment processing or other functions on our behalf.',
               style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
-                  ),
+                fontSize: 16,
+                color: Colors.black54,
+              ),
             ),
             SizedBox(
               height: 20,
@@ -212,11 +215,38 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
               ),
             ),
             SizedBox(
+              height: 30,
+            ),
+            Text(
+              'For more Information about Privacy, Click on the button given below -',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w900),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RoundedButton(
+              title: 'KNOW MORE',
+              style: AlertTextStyle,
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.05,
+              onPressed: () {
+                openurl();
+              },
+            ),
+            SizedBox(
               height: 40,
             ),
           ],
         ),
       ),
     );
+  }
+
+  openurl() {
+    String url = "https://www.freeprivacypolicy.com/live/fbbe483d-59d0-4381-95ce-f5ab7d309abc";
+    launch(url);
   }
 }

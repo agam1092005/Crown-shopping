@@ -3,9 +3,9 @@ import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/Wallet/WalletShimmer.dart';
 import 'package:crown_shopping/login_screen.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +19,36 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
   // ignore: non_constant_identifier_names
   String Googlename = '';
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  FlutterLocalNotificationsPlugin localNotification;
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+
+  Future _showGooglesignoutnotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      '$Googlename, signed out successfully',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$Googlename, signed out successfully',
+        generalNotificationDetails);
+  }
 
   getGData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,7 +63,6 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
       getGData();
     });
 
-    final _auth = FirebaseAuth.instance;
     return Builder(
       builder: (context) => Container(
         child: ListView(
@@ -154,7 +183,6 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
               height: MediaQuery.of(context).size.height * 0.05,
               onPressed: () async {
                await _googleSignIn.disconnect();
-                _auth.signOut();
                 Navigator.pushAndRemoveUntil(
                     context,
                     PageRouteBuilder(
@@ -170,6 +198,7 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
                       },
                     ),
                         (route) => false);
+                _showGooglesignoutnotification();
               },
             ),
             SizedBox(

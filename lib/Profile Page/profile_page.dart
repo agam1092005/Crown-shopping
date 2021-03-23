@@ -6,6 +6,7 @@ import 'package:crown_shopping/login_screen.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,35 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   PickedFile _imageFile;
   final ImagePicker _picker = ImagePicker();
+  FlutterLocalNotificationsPlugin localNotification;
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+  Future _showsignoutnotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      '$displayemail, signed out successfully',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$displayemail, signed out successfully',
+        generalNotificationDetails);
+  }
 
   void takePhoto(ImageSource source) async {
     // ignore: non_constant_identifier_names
@@ -310,6 +340,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                     ),
                     (route) => false);
+                _showsignoutnotification();
               },
             ),
             SizedBox(

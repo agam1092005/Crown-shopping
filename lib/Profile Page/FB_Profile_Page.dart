@@ -6,6 +6,7 @@ import 'package:crown_shopping/settings/settings_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FBProfilePage extends StatefulWidget {
@@ -15,6 +16,36 @@ class FBProfilePage extends StatefulWidget {
 
 class _FBProfilePageState extends State<FBProfilePage> {
   static final FacebookLogin facebookSignIn = new FacebookLogin();
+  FlutterLocalNotificationsPlugin localNotification;
+
+  @override
+  void initState() {
+    super.initState();
+    var androidInitialize = new AndroidInitializationSettings('crown');
+    var initializeSettings =
+    new InitializationSettings(android: androidInitialize);
+    localNotification = new FlutterLocalNotificationsPlugin();
+    localNotification.initialize(initializeSettings);
+  }
+
+
+  Future _showFBsignoutnotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      '$FBname, signed out successfully',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+    new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$FBname, signed out successfully',
+        generalNotificationDetails);
+  }
 
   // ignore: non_constant_identifier_names
   String FBname = '';
@@ -166,6 +197,7 @@ class _FBProfilePageState extends State<FBProfilePage> {
                       },
                     ),
                         (route) => false);
+                _showFBsignoutnotification();
               },
             ),
             SizedBox(

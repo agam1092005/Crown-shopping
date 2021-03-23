@@ -71,8 +71,8 @@ class _ThankYouPageState extends State<ThankYouPage> {
             ),
             RoundedButton(
               title: 'VIEW MY ORDERS', style: AlertTextStyle,
-              height: 60,
-              width: 40,
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.05,
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
