@@ -20,7 +20,7 @@ class _SignInScreenState extends State<SignInScreen> {
   String email;
   String password;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  final emailcontroller = TextEditingController();
 
   @override
   void initState() {
@@ -80,6 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: emailcontroller,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: MultiValidator([
                         RequiredValidator(errorText: 'Email is required'),
@@ -214,13 +215,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: MediaQuery.of(context).size.height * 0.05,
                 onPressed: () async {
                   _formkey.currentState.validate();
-                  try {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
 
                     if (user != null) {
                       SharedPreferences prefs = await SharedPreferences.getInstance();
                       prefs.setString('displayemail', user.user.email);
+                      prefs.setString('email', emailcontroller.text);
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
@@ -238,9 +239,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       );
                       _shownotification();
                     }
-                  } catch (e) {
-                    print(e);
-                  }
                 },
               ),
               SizedBox(

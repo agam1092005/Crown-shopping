@@ -1,16 +1,20 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:crown_shopping/Additional%20Pages/Extra%20loading_screen.dart';
+import 'package:crown_shopping/Additional%20Pages/FB_loading.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
-import 'package:crown_shopping/home/FB_Home_page.dart';
-import 'package:crown_shopping/home/Google_Home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'ID/sign_in_screen.dart';
 import 'ID/sign_up_screen.dart';
 import 'package:flutter/animation.dart';
+import 'package:http/http.dart' as http;
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -20,33 +24,51 @@ class LoginScreen extends StatefulWidget {
 class _LoginscreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final _auth = FirebaseAuth.instance;
   static final FacebookLogin facebookSignIn = new FacebookLogin();
   Animation<double> animation;
   FlutterLocalNotificationsPlugin localNotification;
+  String fbname;
+  String fbimage;
 
-  Future<Null> _login() async {
-    final FacebookLoginResult result =
-    await facebookSignIn.logIn(['email']);
-
+  // ignore: non_constant_identifier_names
+  Future<Null> _FBlogin() async {
+    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
-        print('''
-         Logged in!
-         
-         Token: ${accessToken.token}
-         User id: ${accessToken.userId}
-         Expires: ${accessToken.expires}
-         Permissions: ${accessToken.permissions}
-         Declined permissions: ${accessToken.declinedPermissions}
-         ''');
+        final graphResponse = await http.get(
+          'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${accessToken.token}',
+        );
+        final profile = jsonDecode(graphResponse.body);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('FBname', fbname);
+        setState(() {
+          fbname = profile['first_name'];
+          fbimage = profile['picture'];
+        });
+        _shownotificationFB();
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            transitionsBuilder: (context, animation, animationTime, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            pageBuilder: (context, animation, animationTime) {
+              return FBLoadingScreen();
+            },
+          ),
+        );
         break;
       case FacebookLoginStatus.cancelledByUser:
-        print('Login cancelled by the user.');
+        _shownotificationFBCancel();
         break;
       case FacebookLoginStatus.error:
-        print('Something went wrong with the login process.\n'
-            'Here\'s the error Facebook gave us: ${result.errorMessage}');
+        _shownotificationFBCancel();
         break;
     }
   }
@@ -55,7 +77,7 @@ class _LoginscreenState extends State<LoginScreen>
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('crown');
     var initializeSettings =
-    new InitializationSettings(android: androidInitialize);
+        new InitializationSettings(android: androidInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializeSettings);
     controller = AnimationController(
@@ -68,7 +90,7 @@ class _LoginscreenState extends State<LoginScreen>
     var androidDetails = new AndroidNotificationDetails(
       'id',
       'Crown',
-      'FB USER, successfully Logged In',
+      '$fbname, successfully Logged In through Facebook',
       enableVibration: true,
       importance: Importance.high,
       playSound: true,
@@ -77,16 +99,37 @@ class _LoginscreenState extends State<LoginScreen>
       icon: 'crown',
     );
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
+        new NotificationDetails(android: androidDetails);
     await localNotification.show(
-        0, 'Crown', 'FB USER, successfully Logged In', generalNotificationDetails);
+        0,
+        'Crown',
+        '$fbname, successfully Logged In through Facebook',
+        generalNotificationDetails);
+  }
+
+  Future _shownotificationFBCancel() async {
+    var androidDetails = new AndroidNotificationDetails(
+      'id',
+      'Crown',
+      'Facebook authentication failed',
+      enableVibration: true,
+      importance: Importance.high,
+      playSound: true,
+      channelShowBadge: true,
+      priority: Priority.high,
+      icon: 'crown',
+    );
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', 'Facebook authentication failed',
+        generalNotificationDetails);
   }
 
   Future _shownotificationGOOGLE() async {
     var androidDetails = new AndroidNotificationDetails(
       'id',
       'Crown',
-      'GOOGLE USER, successfully Logged In',
+      'GOOGLE USER, successfully Logged In  through Google',
       enableVibration: true,
       importance: Importance.high,
       playSound: true,
@@ -95,9 +138,12 @@ class _LoginscreenState extends State<LoginScreen>
       icon: 'crown',
     );
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
+        new NotificationDetails(android: androidDetails);
     await localNotification.show(
-        0, 'Crown', 'GOOGLE USER, successfully Logged In', generalNotificationDetails);
+        0,
+        'Crown',
+        'GOOGLE USER, successfully Logged In through Google',
+        generalNotificationDetails);
   }
 
   @override
@@ -265,24 +311,8 @@ class _LoginscreenState extends State<LoginScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            _login();
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionsBuilder:
-                                    (context, animation, animationTime, child) {
-                                  return FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  );
-                                },
-                                pageBuilder: (context, animation, animationTime) {
-                                  return FBHomePage();
-                                },
-                              ),
-                            );
-                            _shownotificationFB();
+                          onTap: () async {
+                            await _FBlogin();
                           },
                           child: CircleAvatar(
                             radius: 35,
@@ -293,23 +323,8 @@ class _LoginscreenState extends State<LoginScreen>
                           width: MediaQuery.of(context).size.width * 0.25,
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                transitionsBuilder:
-                                    (context, animation, animationTime, child) {
-                                  return FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  );
-                                },
-                                pageBuilder: (context, animation, animationTime) {
-                                  return GoogleHomePage();
-                                },
-                              ),
-                            );
-                            _shownotificationGOOGLE();
+                          onTap: () async {
+                            await _Glogin();
                           },
                           child: CircleAvatar(
                             radius: 35,
@@ -326,5 +341,18 @@ class _LoginscreenState extends State<LoginScreen>
         ),
       ),
     );
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<void> _Glogin() async {
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+    AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+    await _auth.signInWithCredential(authCredential);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('Googlename', _auth.currentUser.displayName);
   }
 }

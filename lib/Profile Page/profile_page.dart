@@ -290,8 +290,11 @@ class _ProfilePageState extends State<ProfilePage> {
               style: AlertTextStyle,
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.05,
-              onPressed: () {
-                _auth.signOut();
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('email');
+                prefs.remove('displayemail');
+                await _auth.signOut();
                 Navigator.pushAndRemoveUntil(
                     context,
                     PageRouteBuilder(

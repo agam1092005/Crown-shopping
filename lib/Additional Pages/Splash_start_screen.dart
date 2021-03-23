@@ -1,3 +1,4 @@
+import 'package:crown_shopping/home/Home_Page.dart';
 import 'package:crown_shopping/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -5,7 +6,6 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashStartScreen extends StatefulWidget {
-
   @override
   _SplashStartScreenState createState() => _SplashStartScreenState();
 }
@@ -13,6 +13,9 @@ class SplashStartScreen extends StatefulWidget {
 class _SplashStartScreenState extends State<SplashStartScreen>
     with TickerProviderStateMixin {
   String displayemail = '';
+  // ignore: non_constant_identifier_names
+  String FinalEmail = '';
+
   display() {
     if (displayemail != null) {
       return Text(
@@ -29,28 +32,44 @@ class _SplashStartScreenState extends State<SplashStartScreen>
       );
   }
 
-
   void initState() {
+    getvalidation().whenComplete(() async {
+      Timer(
+        Duration(seconds: 3),
+        () => FinalEmail == null
+            ? Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  transitionsBuilder:
+                      (context, animation, animationTime, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  pageBuilder: (context, animation, animationTime) {
+                    return LoginScreen();
+                  },
+                ),
+              )
+            : Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  transitionsBuilder:
+                      (context, animation, animationTime, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  pageBuilder: (context, animation, animationTime) {
+                    return HomePage();
+                  },
+                ),
+              ),
+      );
+    });
     super.initState();
-    _getData();
-    super.initState();
-    Timer(
-      Duration(seconds: 3),
-      () => Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          transitionsBuilder: (context, animation, animationTime, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          pageBuilder: (context, animation, animationTime) {
-            return LoginScreen();
-          },
-        ),
-      ),
-    );
   }
 
   _getData() async {
@@ -60,8 +79,22 @@ class _SplashStartScreenState extends State<SplashStartScreen>
     });
   }
 
+  getvalidation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // ignore: non_constant_identifier_names
+    var ObtainEmail = prefs.getString('email');
+    setState(() {
+      FinalEmail = ObtainEmail;
+    });
+    print(FinalEmail);
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getvalidation();
+      _getData();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

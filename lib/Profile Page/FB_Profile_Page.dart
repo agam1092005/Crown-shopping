@@ -1,15 +1,12 @@
-import 'dart:io';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/Wallet/WalletShimmer.dart';
 import 'package:crown_shopping/login_screen.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../OTHERS/bgcolor.dart';
 
 class FBProfilePage extends StatefulWidget {
   @override
@@ -17,135 +14,23 @@ class FBProfilePage extends StatefulWidget {
 }
 
 class _FBProfilePageState extends State<FBProfilePage> {
-  PickedFile _imageFile;
-  final ImagePicker _picker = ImagePicker();
   static final FacebookLogin facebookSignIn = new FacebookLogin();
 
-  void takePhoto(ImageSource source) async {
-    // ignore: non_constant_identifier_names
-    final PickedFile = await _picker.getImage(source: source);
-    setState(() {
-      _imageFile = PickedFile;
-    });
-  }
-
   // ignore: non_constant_identifier_names
-  Widget Bottomsheet() {
-    return BottomSheet(
-      // ignore: non_constant_identifier_names
-      builder: (BuildContext) {
-        return Container(
-          height: 320,
-          color: Color(0xFF737373),
-          child: Container(
-            padding: EdgeInsets.all(30),
-            height: 300,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            child: Column(
-              children: [
-                Text('Choose Source', style: TaglineTextStyle),
-                SizedBox(height: 30),
-                GestureDetector(
-                  onTap: () {
-                    takePhoto(ImageSource.camera);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Bgcolor.deepred,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.camera_alt_outlined,
-                            color: Colors.black, size: 40),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'CAMERA',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: 'Bungee'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    takePhoto(ImageSource.gallery);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Bgcolor.deepred,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.photo_library_outlined,
-                            color: Colors.black, size: 40),
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'GALLERY',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: 'Bungee'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      onClosing: () {
-        Navigator.pop(context);
-      },
-    );
-  }
+  String FBname = '';
 
-  String displayemail = '';
-
-  getData() async {
+  getFBData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      displayemail = prefs.getString('displayemail');
+      FBname = prefs.getString('FBname');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
-      getData();
+      getFBData();
     });
-
     return Builder(
       builder: (context) => Container(
         child: ListView(
@@ -163,43 +48,17 @@ class _FBProfilePageState extends State<FBProfilePage> {
             SizedBox(
               height: 40,
             ),
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 100,
-                  backgroundImage: _imageFile == null
-                      ? AssetImage('images/Profile.png')
-                      : FileImage(
-                    File(_imageFile.path),
-                  ),
-                ),
-                Positioned(
-                  bottom: 1,
-                  right: 70,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (builder) => Bottomsheet(),
-                      );
-                    },
-                    elevation: 4,
-                    backgroundColor: Colors.black,
-                    child: Icon(
-                      Icons.edit_outlined,
-                      size: 30,
-                    ),
-                    splashColor: Bgcolor.deepred,
-                  ),
-                ),
-              ],
+            Center(
+              child: CircleAvatar(
+                radius: 100,
+                backgroundImage: AssetImage('images/Profile.png'),
+              ),
             ),
             SizedBox(
               height: 40,
             ),
             Text(
-              'FACEBOOK NAME -',
+              'FACEBOOK NAME - $FBname',
               style: TaglineTextStyle,
             ),
             SizedBox(

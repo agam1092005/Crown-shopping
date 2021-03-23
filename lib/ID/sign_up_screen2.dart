@@ -16,6 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen2> {
   final _auth = FirebaseAuth.instance;
   String email;
   FlutterLocalNotificationsPlugin localNotification;
+  final emailcontroller = TextEditingController();
   String password;
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -76,6 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: emailcontroller,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: MultiValidator([
                         RequiredValidator(errorText: 'Email is required'),
@@ -193,13 +195,13 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                   height: MediaQuery.of(context).size.height * 0.05,
                   onPressed: () async {
                     _formkey.currentState.validate();
-                    try {
                       final newUser =
                           await _auth.createUserWithEmailAndPassword(
                               email: email, password: password);
                       if (newUser != null) {
                         SharedPreferences prefs = await SharedPreferences.getInstance();
                         prefs.setString('displayemail', newUser.user.email);
+                        prefs.setString('email', emailcontroller.text);
                         Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
@@ -218,9 +220,6 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                         );
                         _shownotification();
                       }
-                    } catch (e) {
-                      print(e);
-                    }
                   }),
               SizedBox(
                 height: 20,
