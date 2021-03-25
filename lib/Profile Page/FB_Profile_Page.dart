@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/Wallet/WalletShimmer.dart';
@@ -23,17 +25,16 @@ class _FBProfilePageState extends State<FBProfilePage> {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('crown');
     var initializeSettings =
-    new InitializationSettings(android: androidInitialize);
+        new InitializationSettings(android: androidInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializeSettings);
   }
-
 
   Future _showFBsignoutnotification() async {
     var androidDetails = new AndroidNotificationDetails(
       'id',
       'Crown',
-      '$FBname, signed out successfully',
+      '$fbname, signed out successfully',
       enableVibration: true,
       importance: Importance.high,
       playSound: true,
@@ -42,18 +43,20 @@ class _FBProfilePageState extends State<FBProfilePage> {
       icon: 'crown',
     );
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
-    await localNotification.show(0, 'Crown', '$FBname, signed out successfully',
+        new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$fbname, signed out successfully',
         generalNotificationDetails);
   }
 
   // ignore: non_constant_identifier_names
-  String FBname = '';
+  String fbname = '';
+  dynamic fbimage = '';
 
   getFBData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      FBname = prefs.getString('FBname');
+      fbname = prefs.getString('fbname');
+      fbimage = prefs.getString('fbimage');
     });
   }
 
@@ -81,27 +84,32 @@ class _FBProfilePageState extends State<FBProfilePage> {
             ),
             Center(
               child: CircleAvatar(
+                backgroundColor: Colors.black54,
                 radius: 100,
-                backgroundImage: AssetImage('images/Profile.png'),
+                backgroundImage: NetworkImage('$fbimage'),
               ),
             ),
+
             SizedBox(
               height: 40,
             ),
-            Text(
-              'FACEBOOK NAME - $FBname',
-              style: TaglineTextStyle,
+            Center(
+              child: Text(
+                '$fbname',
+                style: TaglineTextStyle,
+              ),
             ),
             SizedBox(
               height: 10,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Sign In Method -',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
@@ -111,7 +119,7 @@ class _FBProfilePageState extends State<FBProfilePage> {
                   'FACEBOOK',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w900),
                 ),
               ],
@@ -196,7 +204,7 @@ class _FBProfilePageState extends State<FBProfilePage> {
                         return LoginScreen();
                       },
                     ),
-                        (route) => false);
+                    (route) => false);
                 _showFBsignoutnotification();
               },
             ),

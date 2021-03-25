@@ -1,6 +1,7 @@
 import 'package:crown_shopping/settings/my_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Others/Constants.dart';
 import 'Others/rounded_button.dart';
@@ -12,6 +13,8 @@ class ThankYouPage extends StatefulWidget {
 
 class _ThankYouPageState extends State<ThankYouPage> {
 
+  // ignore: non_constant_identifier_names
+  String OrderNumber;
   var randomNumber = randomNumeric(10);
   var randomstring = randomAlpha(3).toUpperCase();
 
@@ -45,7 +48,8 @@ class _ThankYouPageState extends State<ThankYouPage> {
             SizedBox(
               height: 40,
             ),
-            Text(
+             Text(
+               OrderNumber =
               'Order number : CR$randomstring$randomNumber',
               style: TextStyle(
                   fontSize: 20, color: Colors.black54, fontFamily: 'Inconsolata'),
@@ -73,8 +77,11 @@ class _ThankYouPageState extends State<ThankYouPage> {
               title: 'VIEW MY ORDERS', style: AlertTextStyle,
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.05,
-              onPressed: () {
-                Navigator.pushReplacement(
+              onPressed: () async {
+                SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                prefs.setString('OrderNumber', OrderNumber);
+                Navigator.push(
                   context,
                   PageRouteBuilder(
                     transitionsBuilder:

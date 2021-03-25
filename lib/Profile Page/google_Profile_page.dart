@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/Wallet/WalletShimmer.dart';
@@ -15,9 +17,13 @@ class GoogleProfilePage extends StatefulWidget {
 }
 
 class _GoogleProfilePageState extends State<GoogleProfilePage> {
-
   // ignore: non_constant_identifier_names
-  String Googlename = '';
+  String Gname = '';
+  // ignore: non_constant_identifier_names
+  String Gmail = '';
+  // ignore: non_constant_identifier_names
+  dynamic Gimage = '';
+
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   FlutterLocalNotificationsPlugin localNotification;
 
@@ -26,17 +32,16 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('crown');
     var initializeSettings =
-    new InitializationSettings(android: androidInitialize);
+        new InitializationSettings(android: androidInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializeSettings);
   }
-
 
   Future _showGooglesignoutnotification() async {
     var androidDetails = new AndroidNotificationDetails(
       'id',
       'Crown',
-      '$Googlename, signed out successfully',
+      '$Gname, signed out successfully',
       enableVibration: true,
       importance: Importance.high,
       playSound: true,
@@ -45,15 +50,17 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
       icon: 'crown',
     );
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
-    await localNotification.show(0, 'Crown', '$Googlename, signed out successfully',
+        new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$Gname, signed out successfully',
         generalNotificationDetails);
   }
 
   getGData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      Googlename = prefs.getString('Googlename');
+      Gname = prefs.getString('Gname');
+      Gmail = prefs.getString('Gmail');
+      Gimage = prefs.getString('Gimage');
     });
   }
 
@@ -83,26 +90,39 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
             Center(
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage('images/Profile.png'),
+                backgroundImage: NetworkImage('$Gimage'),
+                backgroundColor: Colors.black54,
               ),
             ),
             SizedBox(
               height: 40,
             ),
-            Text(
-              'Gmail ID - $Googlename',
-              style: TaglineTextStyle,
+            Center(
+              child: Text(
+                '$Gname',
+                style: TaglineTextStyle,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                '$Gmail',
+                style: TaglineTextStyle,
+              ),
             ),
             SizedBox(
               height: 10,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Sign In Method -',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
@@ -112,7 +132,7 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
                   'GOOGLE',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w900),
                 ),
               ],
@@ -182,7 +202,7 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.05,
               onPressed: () async {
-               await _googleSignIn.disconnect();
+                await _googleSignIn.disconnect();
                 Navigator.pushAndRemoveUntil(
                     context,
                     PageRouteBuilder(
@@ -197,7 +217,7 @@ class _GoogleProfilePageState extends State<GoogleProfilePage> {
                         return LoginScreen();
                       },
                     ),
-                        (route) => false);
+                    (route) => false);
                 _showGooglesignoutnotification();
               },
             ),

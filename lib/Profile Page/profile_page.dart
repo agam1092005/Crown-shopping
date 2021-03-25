@@ -228,30 +228,31 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 40,
             ),
-            Text(
-              'Email ID - $displayemail',
-              style: TaglineTextStyle,
+            Center(
+              child: Text(
+                '$displayemail',
+                style: TaglineTextStyle,
+              ),
             ),
             SizedBox(
               height: 10,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Sign In Method -',
+                  'Sign In Method - ',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+
                 Text(
                   'CROWN',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 14,
                       fontWeight: FontWeight.w900),
                 ),
               ],
