@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:crown_shopping/Additional%20Pages/Extra%20loading_screen.dart';
 import 'package:crown_shopping/Additional%20Pages/FB_loading.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -114,204 +114,156 @@ class _LoginscreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.all(60.0),
-                child: Container(
-                  child: Image(
-                    image: AssetImage(
-                      'images/crown.png',
+      child: Material(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient:  LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white,
+                Colors.grey.shade400,
+                Colors.grey.shade600,
+                Colors.grey.shade700,
+              ],
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.all(60.0),
+                  child: Container(
+                    child: Image(
+                      image: AssetImage(
+                        'images/crown.png',
+                      ),
                     ),
                   ),
                 ),
+                height: 250,
               ),
-              height: 250,
-            ),
-            Flexible(
-              child: Container(
-                padding: EdgeInsets.all(20),
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              Flexible(
+                child: SizedBox(
+                  height: 1000,
+                ),
+              ),
+              Column(
+                children: [
+                  RoundedButton(
+                    title: 'Log In',
+                    style: AlertTextStyle,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          transitionsBuilder:
+                              (context, animation, animationTime, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          pageBuilder: (context, animation, animationTime) {
+                            return SignInScreen();
+                          },
+                        ),
+                      );
+                    },
                   ),
-                  boxShadow: [
-                    BoxShadow(color: Colors.black26, spreadRadius: 1),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    RoundedButton(
-                      title: 'Get Started',
-                      style: AlertTextStyle,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionsBuilder:
-                                (context, animation, animationTime, child) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              );
-                            },
-                            pageBuilder: (context, animation, animationTime) {
-                              return ExtraLoadingScreen();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.025,
-                    ),
-                    Container(
-                      height: 2,
-                      width: 150,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.025,
-                    ),
-                    RoundedButton(
-                      title: 'Log In',
-                      style: AlertTextStyle,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionsBuilder:
-                                (context, animation, animationTime, child) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              );
-                            },
-                            pageBuilder: (context, animation, animationTime) {
-                              return SignInScreen();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.05,
-                      child: Text(
-                        'Don\'t have an account?',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'NotoSans'),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Text(
-                        'Register NOW !',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: 'NotoSans'),
-                      ),
-                    ),
-                    RoundedButton(
-                      title: 'Register',
-                      style: AlertTextStyle,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.05,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            transitionsBuilder:
-                                (context, animation, animationTime, child) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: child,
-                              );
-                            },
-                            pageBuilder: (context, animation, animationTime) {
-                              return SignUpScreen();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.01,
-                    ),
-                    Container(
-                      child: Text(
-                        '-OR-',
-                        style: TextStyle(
-                            fontFamily: 'NotoSans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Colors.black),
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        'Continue with',
-                        style: TextStyle(
-                            fontFamily: 'NotoSans',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Colors.black),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.05,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            await _FBlogin();
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setString('fbname', fbname);
-                            prefs.setString('fbimage', fbimage);
+                  RoundedButton(
+                    title: 'Register',
+                    style: AlertTextStyle,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          transitionsBuilder:
+                              (context, animation, animationTime, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
                           },
-                          child: CircleAvatar(
-                            radius: 35,
-                            backgroundImage: AssetImage('images/facebook.png'),
-                          ),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            await _Glogin();
-                            SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                            prefs.setString('Gname', Gname);
-                            prefs.setString('Gimage', Gimage);
-                            prefs.setString('Gmail', Gmail);
+                          pageBuilder: (context, animation, animationTime) {
+                            return SignUpScreen();
                           },
-                          child: CircleAvatar(
-                            radius: 35,
-                            backgroundImage: AssetImage('images/google.png'),
-                          ),
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.06,
+                  ),
+                  Container(
+                    child: Text(
+                      '-OR-',
+                      style: TextStyle(
+                          fontFamily: 'NotoSans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Colors.white),
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      'Continue with',
+                      style: TextStyle(
+                          fontFamily: 'NotoSans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.06,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          await _FBlogin();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setString('fbname', fbname);
+                          prefs.setString('fbimage', fbimage);
+                        },
+                        child: CircleAvatar(
+                          radius: 35,
+                          backgroundImage: AssetImage('images/facebook.png'),
+                        ),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.25,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await _Glogin();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setString('Gname', Gname);
+                          prefs.setString('Gimage', Gimage);
+                          prefs.setString('Gmail', Gmail);
+                        },
+                        child: CircleAvatar(
+                          radius: 35,
+                          backgroundImage: AssetImage('images/google.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -319,42 +271,41 @@ class _LoginscreenState extends State<LoginScreen>
 
   // ignore: non_constant_identifier_names
   Future<void> _Glogin() async {
-      final GoogleSignIn _googleSignIn = GoogleSignIn(
-        scopes: ['email'],
-      );
-      final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: ['email'],
+    );
+    final FirebaseAuth _auth = FirebaseAuth.instance;
 
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
 
-      final User user = (await _auth.signInWithCredential(credential)).user;
-      Gname = user.displayName;
-      Gmail = user.email;
-      Gimage = user.photoURL;
-      _shownotificationGOOGLE();
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          transitionsBuilder: (context, animation, animationTime, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          pageBuilder: (context, animation, animationTime) {
-            return GoogleLoadingScreen();
-          },
-        ),
-      );
-      return;
+    final User user = (await _auth.signInWithCredential(credential)).user;
+    Gname = user.displayName;
+    Gmail = user.email;
+    Gimage = user.photoURL;
+    _shownotificationGOOGLE();
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionsBuilder: (context, animation, animationTime, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, animationTime) {
+          return GoogleLoadingScreen();
+        },
+      ),
+    );
+    return;
   }
-
 
   // ignore: non_constant_identifier_names
   Future<Null> _FBlogin() async {

@@ -96,9 +96,19 @@ class _SplashStartScreenState extends State<SplashStartScreen>
       _getData();
     });
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
+      child: Container(
+        decoration:  BoxDecoration(
+          gradient:  LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              Colors.grey.shade400,
+              Colors.grey.shade600,
+              Colors.grey.shade700,
+            ],
+          ),
+        ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -140,7 +150,6 @@ class _SplashStartScreenState extends State<SplashStartScreen>
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

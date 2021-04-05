@@ -81,7 +81,7 @@ class _ThankYouPageState extends State<ThankYouPage> {
                 SharedPreferences prefs =
                     await SharedPreferences.getInstance();
                 prefs.setString('OrderNumber', OrderNumber);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
                     transitionsBuilder:

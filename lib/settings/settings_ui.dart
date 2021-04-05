@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
+import 'package:crown_shopping/settings/T&C_loader.dart';
 import 'package:crown_shopping/settings/about_us.dart';
 import 'package:crown_shopping/settings/chatwithus_details.dart';
 import 'package:crown_shopping/settings/customer_care.dart';
 import 'package:crown_shopping/settings/loading_order.dart';
-import 'package:crown_shopping/settings/privacy_policy.dart';
-import 'package:crown_shopping/settings/return_policy.dart';
-import 'package:crown_shopping/settings/terms_&_conditions.dart';
+import 'package:crown_shopping/settings/privacy_policy_loader.dart';
+import 'package:crown_shopping/settings/return_policy_loader.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -150,7 +150,7 @@ class _SettingsState extends State<SettingsPage> {
                       );
                     },
                     pageBuilder: (context, animation, animationTime) {
-                      return ReturnPolicy();
+                      return ReturnPolicyLoading();
                     },
                   ),
                 );
@@ -173,7 +173,7 @@ class _SettingsState extends State<SettingsPage> {
                       );
                     },
                     pageBuilder: (context, animation, animationTime) {
-                      return PrivacyPolicy();
+                      return PrivacyPolicyLoading();
                     },
                   ),
                 );
@@ -196,7 +196,7 @@ class _SettingsState extends State<SettingsPage> {
                       );
                     },
                     pageBuilder: (context, animation, animationTime) {
-                      return TermsConditions();
+                      return TermsConditionLoading();
                     },
                   ),
                 );
