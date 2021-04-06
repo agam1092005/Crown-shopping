@@ -1,10 +1,9 @@
+import 'package:crown_shopping/Others/Constants.dart';
+import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/settings/my_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'Others/Constants.dart';
-import 'Others/rounded_button.dart';
 
 class ThankYouPage extends StatefulWidget {
   @override

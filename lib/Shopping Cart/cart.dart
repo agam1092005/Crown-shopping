@@ -1,3 +1,4 @@
+import 'package:crown_shopping/Checkout/checkout_loading1.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
@@ -73,7 +74,22 @@ class _ShoppingCartState extends State<ShoppingCart> {
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: RoundedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      transitionsBuilder: (context, animation, animationTime, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      },
+                      pageBuilder: (context, animation, animationTime) {
+                        return CheckoutLoading1();
+                      },
+                    ),
+                  );
+                },
                 width: double.maxFinite,
                 height: MediaQuery.of(context).size.height * 0.05,
                 title: 'CHECKOUT',

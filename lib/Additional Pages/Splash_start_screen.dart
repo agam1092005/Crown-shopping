@@ -96,60 +96,62 @@ class _SplashStartScreenState extends State<SplashStartScreen>
       _getData();
     });
     return SafeArea(
-      child: Container(
-        decoration:  BoxDecoration(
-          gradient:  LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Colors.grey.shade400,
-              Colors.grey.shade600,
-              Colors.grey.shade700,
-            ],
+      child: Material(
+        child: Container(
+          decoration:  BoxDecoration(
+            gradient:  LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white,
+                Colors.grey.shade400,
+                Colors.grey.shade600,
+                Colors.grey.shade700,
+              ],
+            ),
           ),
-        ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.all(60.0),
-                    child: Container(
-                      child: Image(
-                        image: AssetImage(
-                          'images/crown.png',
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.all(60.0),
+                      child: Container(
+                        child: Image(
+                          image: AssetImage(
+                            'images/crown.png',
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  height: 250,
-                ),
-              ),
-              SizedBox(
-                height: 200,
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: display(),
+                    height: 250,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                padding: EdgeInsets.all(20),
-                child: SpinKitWave(
-                  size: 40,
-                  color: Colors.grey,
+                SizedBox(
+                  height: 200,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: display(),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.all(20),
+                  child: SpinKitWave(
+                    size: 40,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+      ),
       );
   }
 }
