@@ -1,12 +1,13 @@
+import 'package:crown_shopping/Checkout/thank_you_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class CheckoutLoading2 extends StatefulWidget {
+class CODloading extends StatefulWidget {
   @override
-  _CheckoutLoading2State createState() => _CheckoutLoading2State();
+  _CODloadingState createState() => _CODloadingState();
 }
 
-class _CheckoutLoading2State extends State<CheckoutLoading2> {
+class _CODloadingState extends State<CODloading> {
   void initState() {
     super.initState();
     Timer(
@@ -21,7 +22,7 @@ class _CheckoutLoading2State extends State<CheckoutLoading2> {
             );
           },
           pageBuilder: (context, animation, animationTime) {
-            return ;
+            return ThankYouPage();
           },
         ),
       ),

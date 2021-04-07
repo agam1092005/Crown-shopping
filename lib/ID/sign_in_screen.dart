@@ -231,7 +231,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       _formkey.currentState.validate();
                         final user = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
-
                         if (user != null) {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setString('displayemail', user.user.email);

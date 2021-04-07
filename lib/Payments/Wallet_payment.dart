@@ -1,52 +1,24 @@
-import 'package:crown_shopping/Checkout/person_details_page.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/material.dart';
 
-class OrderInformationPage extends StatefulWidget {
+class WalletPayment extends StatefulWidget {
   @override
-  _OrderInformationPageState createState() => _OrderInformationPageState();
+  _WalletPaymentState createState() => _WalletPaymentState();
 }
 
-class _OrderInformationPageState extends State<OrderInformationPage> {
+class _WalletPaymentState extends State<WalletPayment> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xFFff4d4d),
-          splashColor: Colors.black,
-          elevation: 6,
-          child: Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.white,
-            size: 25,
-          ),
-          onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  transitionsBuilder:
-                      (context, animation, animationTime, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  pageBuilder: (context, animation, animationTime) {
-                    return PersonsDetails();
-                  },
-                ),
-              );
-          },
-        ),
         backgroundColor: Colors.white,
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 30),
           children: [
             Text(
-              'Review Your Order',
+              'Wallet Payment',
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 fontSize: 32,
@@ -70,7 +42,7 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
                 ),
                 Icon(
                   Icons.home_work_outlined,
-                  color: Colors.black54,
+                  color: Bgcolor.deepred,
                   size: 30,
                 ),
                 Container(
@@ -80,7 +52,7 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
                 ),
                 Icon(
                   Icons.payment,
-                  color: Colors.black54,
+                  color: Bgcolor.deepred,
                   size: 30,
                 ),
                 Container(
@@ -96,40 +68,64 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
               ],
             ),
             SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              width: double.maxFinite,
+              child: ListTile(
+                leading: Icon(
+                  Icons.info_outline_rounded,
+                  size: 25,
+                  color: Colors.yellow,
+                ),
+                title: Text(
+                  "According to our Terms & Conditions, your Crown Wallet should atleast have \$60 to proceed for placing an order.",
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w900,
+                      fontFamily: 'Inconsolata'),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Your wallet only has \$10',
+              style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Something went wrong',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54),
+            ),
+            SizedBox(
               height: 40,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                color: Colors.black26,
-              ),
-              height: 200,
+            RoundedButton(
+              onPressed: () {
+              Navigator.pop(context);
+              },
               width: double.maxFinite,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                color: Colors.black26,
-              ),
-              height: 200,
-              width: double.maxFinite,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Align(
-              child: Text(
-                'AMOUNT: (price)',
-                style: DrawerTextStyle,
-              ),
-              alignment: Alignment.bottomRight,
+              height: MediaQuery.of(context).size.height * 0.05,
+              title: 'CANCEL',
+              style: AlertTextStyle,
             ),
             SizedBox(
               height: 40,

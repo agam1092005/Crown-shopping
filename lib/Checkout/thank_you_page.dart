@@ -1,4 +1,5 @@
 import 'package:crown_shopping/Others/Constants.dart';
+import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:crown_shopping/settings/my_orders.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,50 @@ class _ThankYouPageState extends State<ThankYouPage> {
               ),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(
+                  Icons.fact_check_outlined,
+                  color: Bgcolor.deepred,
+                  size: 30,
+                ),
+                Container(
+                  width: 60,
+                  height: 8,
+                  color: Colors.black,
+                ),
+                Icon(
+                  Icons.home_work_outlined,
+                  color: Bgcolor.deepred,
+                  size: 30,
+                ),
+                Container(
+                  width: 60,
+                  height: 8,
+                  color: Colors.black,
+                ),
+                Icon(
+                  Icons.payment,
+                  color: Bgcolor.deepred,
+                  size: 30,
+                ),
+                Container(
+                  width: 60,
+                  height: 8,
+                  color: Colors.black,
+                ),
+                Icon(
+                  Icons.done_outline_outlined,
+                  color: Bgcolor.deepred,
+                  size: 30,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
             ),
             Text(
               'Thank You for purchasing order from Crown Shopping',
