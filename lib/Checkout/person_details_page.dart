@@ -353,7 +353,7 @@ class _PersonsDetailsState extends State<PersonsDetails> {
                   ),
                   TextFormField(
                     validator: MultiValidator([
-                      RequiredValidator(errorText: 'Email is required'),
+                      RequiredValidator(errorText: 'Zipcode is required'),
                       LengthRangeValidator(
                           min: 5,
                           max: 10,

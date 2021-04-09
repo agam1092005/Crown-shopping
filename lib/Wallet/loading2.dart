@@ -43,12 +43,33 @@ class _Loading2State extends State<Loading2> {
               ),
             ),
             SizedBox(height: 50),
-            Text(
-              'waiting for response from server...',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black54),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                width: double.maxFinite,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.info_outline_rounded,
+                    size: 25,
+                    color: Colors.yellow,
+                  ),
+                  title: Text(
+                    "Waiting for response from our server...",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Inconsolata'),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
