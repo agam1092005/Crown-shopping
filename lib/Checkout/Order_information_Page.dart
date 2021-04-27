@@ -12,6 +12,19 @@ class OrderInformationPage extends StatefulWidget {
 class _OrderInformationPageState extends State<OrderInformationPage> {
   @override
   Widget build(BuildContext context) {
+    int _counter = 1;
+
+    void _incrementCounter() {
+      setState(() {
+        _counter++;
+      });
+    }
+
+    void _decrementCounter() {
+      setState(() {
+        _counter--;
+      });
+    }
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -24,21 +37,20 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
             size: 25,
           ),
           onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                PageRouteBuilder(
-                  transitionsBuilder:
-                      (context, animation, animationTime, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  pageBuilder: (context, animation, animationTime) {
-                    return PersonsDetails();
-                  },
-                ),
-              );
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                transitionsBuilder: (context, animation, animationTime, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+                pageBuilder: (context, animation, animationTime) {
+                  return PersonsDetails();
+                },
+              ),
+            );
           },
         ),
         backgroundColor: Colors.white,
@@ -99,27 +111,84 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
               height: 40,
             ),
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                color: Colors.black26,
+              height: MediaQuery.of(context).size.height / 2,
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: 4,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.8,
+                          alignment: Alignment.center,
+                          child: ListTile(
+                            leading: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment.center,
+                                  image: AssetImage(
+                                    'images/S2.png',
+                                  ),
+                                ),
+                                color: Colors.black38,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    12,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            title: Text('HELLO'),
+                            subtitle: Text('Quantity x$_counter'),
+                            trailing: Text('25'),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                            color: Colors.black26,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.remove,
+                                size: 25,
+                              ),
+                              onPressed: _decrementCounter,
+                              splashRadius: 15,
+                            ),
+                            Text(
+                              '$_counter',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Inconsolata'),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                size: 25,
+                              ),
+                              onPressed: _incrementCounter,
+                              splashRadius: 15,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-              height: 200,
-              width: double.maxFinite,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-                color: Colors.black26,
-              ),
-              height: 200,
-              width: double.maxFinite,
             ),
             SizedBox(
               height: 20,

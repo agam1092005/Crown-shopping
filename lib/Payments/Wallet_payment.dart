@@ -80,7 +80,7 @@ class _WalletPaymentState extends State<WalletPayment> {
                   color: Colors.yellow,
                 ),
                 title: Text(
-                  "According to our Terms & Conditions, your Crown Wallet should atleast have \$60 to proceed for placing an order.",
+                  "According to our Terms & Conditions, your Crown Wallet should atleast have \$60 for placing an order.",
                   style: TextStyle(
                       fontSize: 16,
                       color: Colors.black54,
@@ -99,7 +99,7 @@ class _WalletPaymentState extends State<WalletPayment> {
               height: 20,
             ),
             Text(
-              'Your wallet only has \$10',
+              'Your wallet has \$10 only',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,

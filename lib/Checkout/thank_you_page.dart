@@ -81,7 +81,7 @@ class _ThankYouPageState extends State<ThankYouPage> {
               height: 20,
             ),
             Text(
-              'Thank You for purchasing order from Crown Shopping',
+              'Thank You for placing an order from Crown Shopping',
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w900,

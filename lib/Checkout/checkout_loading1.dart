@@ -1,6 +1,6 @@
+import 'package:crown_shopping/Checkout/Order_information_Page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'Order_information_Page.dart';
 
 class CheckoutLoading1 extends StatefulWidget {
   @override

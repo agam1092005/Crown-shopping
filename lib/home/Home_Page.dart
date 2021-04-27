@@ -18,12 +18,12 @@ import 'Home.dart';
 
 class HomePage extends StatefulWidget {
   static const String id = 'Home_Page';
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+
   List<Widget> _pages = [
     Home(),
     CategoryPage(),
@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ];
 
   int _selectedIndex = 0;
-
   void _onItemTap(int index) {
     setState(
       () {

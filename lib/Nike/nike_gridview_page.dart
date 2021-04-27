@@ -507,6 +507,7 @@ Widget _buildBackground(int index, double width) {
                   onTap: () {},
                   child: Icon(
                     Icons.add,
+                    size: 40,
                     color: Colors.white,
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Payment_method_Page.dart';
 
 class PersonsDetails extends StatefulWidget {
@@ -31,7 +32,14 @@ class _PersonsDetailsState extends State<PersonsDetails> {
             color: Colors.white,
             size: 25,
           ),
-          onPressed: () {
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('detailname', name);
+            prefs.setString('detailnumber', phone);
+            prefs.setString('detailhousenumber', housenumber);
+            prefs.setString('detailaddress', building);
+            prefs.setString('detailstate', state);
+            prefs.setString('detailzipcode', zipcode);
             if (_formkey.currentState.validate()) {
               Navigator.pushReplacement(
                 context,

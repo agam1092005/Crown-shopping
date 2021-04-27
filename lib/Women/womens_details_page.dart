@@ -177,10 +177,15 @@ class _DetailPageState extends State<WomenDetailPage> {
                 Radius.circular(50),
               ),
             ),
-            child: Text(
-              "ADD CART",
-              style: TextStyle(
-                color: Colors.white,
+            child: GestureDetector(
+              onTap: () {
+
+              },
+              child: Text(
+                "ADD CART",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

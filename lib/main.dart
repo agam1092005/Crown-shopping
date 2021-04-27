@@ -9,6 +9,7 @@ void main() async {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashStartScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        home: SplashStartScreen(),
+      );
   }
 }

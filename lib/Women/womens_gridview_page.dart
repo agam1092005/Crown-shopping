@@ -8,6 +8,7 @@ import 'package:crown_shopping/Senakers/shoe_listview_page.dart';
 import 'package:crown_shopping/Women/womens_listview_page.dart';
 import 'package:crown_shopping/jackets/jackets_listview_page.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/app_clipper.dart';
 import 'womens_details_page.dart';
 import 'womens_model.dart';
@@ -20,7 +21,6 @@ class WomenGridPage extends StatefulWidget {
 
 class _WomenGridPageState extends State<WomenGridPage> {
   List<WomenModel> womenList = WomenModel.list;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -428,7 +428,6 @@ class _WomenGridPageState extends State<WomenGridPage> {
 
 Widget _buildBackground(int index, double width) {
   List<WomenModel> womenList = WomenModel.list;
-
   return ClipPath(
     clipper: AppClipper(cornerSize: 25, diagonalHeight: 150),
     child: Container(
@@ -479,9 +478,14 @@ Widget _buildBackground(int index, double width) {
               ),
               child: Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setString('productname', womenList[index].name);
+                    prefs.setString('productprice', womenList[index].price.toString());
+                  },
                   child: Icon(
                     Icons.add,
+                    size: 40,
                     color: Colors.white,
                   ),
                 ),
