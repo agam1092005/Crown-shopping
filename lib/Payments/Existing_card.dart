@@ -1,9 +1,10 @@
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Payments/Payment-services.dart';
-import 'package:crown_shopping/home/Home_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'COD_Loading.dart';
 
 class ExistingCardPage extends StatefulWidget {
   @override
@@ -11,7 +12,6 @@ class ExistingCardPage extends StatefulWidget {
 }
 
 class _ExistingCardPageState extends State<ExistingCardPage> {
-
   double productprice;
   int productquantity;
 
@@ -25,7 +25,6 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
 
   @override
   Widget build(BuildContext context) {
-
     setState(() {
       getProductData();
     });
@@ -43,23 +42,21 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                 content: Text(response.message),
                 duration: Duration(milliseconds: 1000),
               ),
-            )
-            .closed
-            .then((_) => Navigator.pushAndRemoveUntil(
+            );
+            Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
-                  transitionsBuilder:
-                      (context, animation, animationTime, child) {
+                  transitionsBuilder: (context, animation, animationTime, child) {
                     return FadeTransition(
                       opacity: animation,
                       child: child,
                     );
                   },
                   pageBuilder: (context, animation, animationTime) {
-                    return HomePage();
+                    return CODloading();
                   },
                 ),
-                (route) => false));
+              );
       }
     }
 
@@ -167,6 +164,7 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                       ),
                       TextButton(
                         onPressed: () {
+                          Navigator.pop(context);
                           PayViaExistingCard(context);
                         },
                         child: Text(

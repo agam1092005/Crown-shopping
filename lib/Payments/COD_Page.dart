@@ -140,7 +140,7 @@ class _CODPageState extends State<CODPage> {
             ),
             RoundedButton(
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
                     transitionsBuilder: (context, animation, animationTime, child) {

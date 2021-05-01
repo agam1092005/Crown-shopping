@@ -1,20 +1,16 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:crown_shopping/Additional%20Pages/FB_loading.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Additional Pages/Goolge_loading.dart';
 import 'ID/sign_in_screen.dart';
 import 'ID/sign_up_screen.dart';
 import 'package:flutter/animation.dart';
-import 'package:http/http.dart' as http;
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,12 +21,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginscreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   AnimationController controller;
-  static final FacebookLogin facebookSignIn = new FacebookLogin();
   Animation<double> animation;
   FlutterLocalNotificationsPlugin localNotification;
   Image imageFromPreferences;
-  String fbname;
-  String fbimage;
   // ignore: non_constant_identifier_names
   String Gname;
   // ignore: non_constant_identifier_names
@@ -49,45 +42,6 @@ class _LoginscreenState extends State<LoginScreen>
         duration: const Duration(microseconds: 400000), vsync: this);
     animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
     controller.forward();
-  }
-
-  Future _shownotificationFB() async {
-    var androidDetails = new AndroidNotificationDetails(
-      'id',
-      'Crown',
-      '$fbname, successfully Logged In through Facebook',
-      enableVibration: true,
-      importance: Importance.high,
-      playSound: true,
-      channelShowBadge: true,
-      priority: Priority.high,
-      icon: 'crown',
-    );
-    var generalNotificationDetails =
-        new NotificationDetails(android: androidDetails);
-    await localNotification.show(
-        0,
-        'Crown',
-        '$fbname, successfully Logged In through Facebook',
-        generalNotificationDetails);
-  }
-
-  Future _shownotificationFBCancel() async {
-    var androidDetails = new AndroidNotificationDetails(
-      'id',
-      'Crown',
-      'Facebook authentication failed',
-      enableVibration: true,
-      importance: Importance.high,
-      playSound: true,
-      channelShowBadge: true,
-      priority: Priority.high,
-      icon: 'crown',
-    );
-    var generalNotificationDetails =
-        new NotificationDetails(android: androidDetails);
-    await localNotification.show(0, 'Crown', 'Facebook authentication failed',
-        generalNotificationDetails);
   }
 
   Future _shownotificationGOOGLE() async {
@@ -117,7 +71,7 @@ class _LoginscreenState extends State<LoginScreen>
       child: Material(
         child: Container(
           decoration: BoxDecoration(
-            gradient:  LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
@@ -222,40 +176,43 @@ class _LoginscreenState extends State<LoginScreen>
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.06,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          await _FBlogin();
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setString('fbname', fbname);
-                          prefs.setString('fbimage', fbimage);
-                        },
-                        child: CircleAvatar(
-                          radius: 35,
-                          backgroundImage: AssetImage('images/facebook.png'),
+                  GestureDetector(
+                    onTap: () async {
+                      await _Glogin();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString('Gname', Gname);
+                      prefs.setString('Gimage', Gimage);
+                      prefs.setString('Gmail', Gmail);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset('images/google.png'),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'GOOGLE',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 28,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          await _Glogin();
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          prefs.setString('Gname', Gname);
-                          prefs.setString('Gimage', Gimage);
-                          prefs.setString('Gmail', Gmail);
-                        },
-                        child: CircleAvatar(
-                          radius: 35,
-                          backgroundImage: AssetImage('images/google.png'),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 40,
@@ -305,42 +262,5 @@ class _LoginscreenState extends State<LoginScreen>
       ),
     );
     return;
-  }
-
-  // ignore: non_constant_identifier_names
-  Future<Null> _FBlogin() async {
-    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
-    switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
-        final FacebookAccessToken accessToken = result.accessToken;
-        final graphResponse = await http.get(
-          'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture.width(800).height(800)&access_token=${accessToken.token}',
-        );
-        final profile = jsonDecode(graphResponse.body);
-        fbname = profile['first_name'];
-        fbimage = profile['picture']['data']['url'];
-        _shownotificationFB();
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            transitionsBuilder: (context, animation, animationTime, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            pageBuilder: (context, animation, animationTime) {
-              return FBLoadingScreen();
-            },
-          ),
-        );
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        _shownotificationFBCancel();
-        break;
-      case FacebookLoginStatus.error:
-        _shownotificationFBCancel();
-        break;
-    }
   }
 }

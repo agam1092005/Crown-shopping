@@ -28,7 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('crown');
     var initializeSettings =
-    new InitializationSettings(android: androidInitialize);
+        new InitializationSettings(android: androidInitialize);
     localNotification = new FlutterLocalNotificationsPlugin();
     localNotification.initialize(initializeSettings);
   }
@@ -46,222 +46,244 @@ class _SignInScreenState extends State<SignInScreen> {
       icon: 'crown',
     );
     var generalNotificationDetails =
-    new NotificationDetails(android: androidDetails);
-    await localNotification.show(
-        0, 'Crown', '$email, successfully logged In', generalNotificationDetails);
+        new NotificationDetails(android: androidDetails);
+    await localNotification.show(0, 'Crown', '$email, successfully logged In',
+        generalNotificationDetails);
   }
-
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Container(
-       decoration: BoxDecoration(
-         gradient:  LinearGradient(
-           begin: Alignment.topCenter,
-           end: Alignment.bottomCenter,
-           colors: [
-             Colors.white,
-             Colors.grey.shade400,
-             Colors.grey.shade600,
-             Colors.grey.shade700,
-           ],
-         ),
-       ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    child: Padding(
-                      padding: const EdgeInsets.all(60.0),
-                      child: Center(
-                        child: Image(
-                          image: AssetImage(
-                            'images/crown.png',
-                          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white,
+                Colors.grey.shade400,
+                Colors.grey.shade600,
+                Colors.grey.shade700,
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: ListView(
+              children: <Widget>[
+                SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.all(60.0),
+                    child: Center(
+                      child: Image(
+                        image: AssetImage(
+                          'images/crown.png',
                         ),
                       ),
                     ),
-                    height: 250,
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Form(
-                    key: _formkey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: emailcontroller,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: MultiValidator([
-                            RequiredValidator(errorText: 'Email is required'),
-                            EmailValidator(errorText: 'Enter a valid Email'),
-                          ]),
-                          keyboardType: TextInputType.emailAddress,
-                          cursorColor: Colors.black,
-                          onChanged: (value) {
-                            email = value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'EMAIL',
-                            labelStyle: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'PollerOne',
-                                color: Color(0xFFff4d4d)),
-                            hintText: 'Enter your Email',
-                            errorStyle: TextStyle(fontSize: 12, color: Bgcolor.deepred),
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            hintStyle: TextStyle(color: Colors.black54),
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Bgcolor.deepred, width: 2.0),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                          ),
-                          style: TextStyle(
+                  height: 250,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Form(
+                  key: _formkey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: emailcontroller,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: 'Email is required'),
+                          EmailValidator(errorText: 'Enter a valid Email'),
+                        ]),
+                        keyboardType: TextInputType.emailAddress,
+                        cursorColor: Colors.black,
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'EMAIL',
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'PollerOne',
+                              color: Color(0xFFff4d4d)),
+                          hintText: 'Enter your Email',
+                          errorStyle:
+                              TextStyle(fontSize: 12, color: Bgcolor.deepred),
+                          prefixIcon: Icon(
+                            Icons.email,
                             color: Colors.black,
-                            height: 2,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                            size: 30,
+                          ),
+                          hintStyle: TextStyle(color: Colors.black54),
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Bgcolor.deepred, width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
                           ),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          validator: RequiredValidator(errorText: 'Password is required'),
-                          obscureText: true,
-                          cursorColor: Colors.black,
-                          toolbarOptions: ToolbarOptions(
-                              copy: false,
-                              paste: false,
-                              cut: false,
-                              selectAll: false),
-                          onChanged: (value) {
-                            password = value;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'PASSWORD',
-                            labelStyle: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'PollerOne',
-                                color: Color(0xFFff4d4d)),
-                            hintText: 'Enter your Password',
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            hintStyle: TextStyle(color: Colors.black54),
-                            errorStyle: TextStyle(fontSize: 12, color: Bgcolor.deepred),
-                            contentPadding: EdgeInsets.all(10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 2.0),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Bgcolor.deepred, width: 2.0),
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                          ),
-                          style: TextStyle(
-                            color: Colors.black,
-                            height: 2,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Forgot Password ?',
-                      style: TextStyle(
-                          fontSize: 14,
+                        style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'NotoSans'),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          transitionsBuilder:
-                              (context, animation, animationTime, child) {
-                            return FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            );
-                          },
-                          pageBuilder: (context, animation, animationTime) {
-                            return ResetPassword();
-                          },
+                          height: 2,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        validator: RequiredValidator(
+                            errorText: 'Password is required'),
+                        obscureText: true,
+                        cursorColor: Colors.black,
+                        toolbarOptions: ToolbarOptions(
+                            copy: false,
+                            paste: false,
+                            cut: false,
+                            selectAll: false),
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'PASSWORD',
+                          labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'PollerOne',
+                              color: Color(0xFFff4d4d)),
+                          hintText: 'Enter your Password',
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          hintStyle: TextStyle(color: Colors.black54),
+                          errorStyle:
+                              TextStyle(fontSize: 12, color: Bgcolor.deepred),
+                          contentPadding: EdgeInsets.all(10),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Bgcolor.deepred, width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                          height: 2,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  RoundedButton(
-                    title: 'Log In',
-                    style: AlertTextStyle,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    onPressed: () async {
-                      _formkey.currentState.validate();
-                        final user = await _auth.signInWithEmailAndPassword(
-                            email: email, password: password);
-                        if (user != null) {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString('displayemail', user.user.email);
-                          prefs.setString('email', emailcontroller.text);
-                          Navigator.pushReplacement(
-                            context,
-                            PageRouteBuilder(
-                              transitionsBuilder:
-                                  (context, animation, animationTime, child) {
-                                return FadeTransition(
-                                  opacity: animation,
-                                  child: child,
-                                );
-                              },
-                              pageBuilder: (context, animation, animationTime) {
-                                return LoadingScreen();
-                              },
-                            ),
+                ),
+                TextButton(
+                  child: Text(
+                    'Forgot Password ?',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'NotoSans'),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        transitionsBuilder:
+                            (context, animation, animationTime, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
                           );
-                          _shownotification();
-                        }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+                        },
+                        pageBuilder: (context, animation, animationTime) {
+                          return ResetPassword();
+                        },
+                      ),
+                    );
+                  },
+                ),
+                RoundedButton(
+                  title: 'Log In',
+                  style: AlertTextStyle,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  onPressed: () async {
+                    _formkey.currentState.validate();
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                          email: email, password: password);
+                      if (user != null) {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('displayemail', user.user.email);
+                        prefs.setString('email', emailcontroller.text);
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            transitionsBuilder:
+                                (context, animation, animationTime, child) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+                            pageBuilder: (context, animation, animationTime) {
+                              return LoadingScreen();
+                            },
+                          ),
+                        );
+                        _shownotification();
+                      }
+                    } catch (e) {
+                      if (e != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: Duration(milliseconds: 1200),
+                            content: Text(
+                              'Something went Wrong, Kindly check your Email & Password',
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
+        ),
       ),
-      );
+    );
   }
 }

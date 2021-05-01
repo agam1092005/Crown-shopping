@@ -1,6 +1,5 @@
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
-import 'package:crown_shopping/home/Home_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -179,25 +178,14 @@ class _PreviousOrderState extends State<PreviousOrder> {
               height: 20,
             ),
             RoundedButton(
-              title: 'BACK TO SHOPPING', style: AlertTextStyle,
+              title: 'CONTINUE', style: AlertTextStyle,
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.05,
               onPressed: () async {
                 SharedPreferences prefs =
                 await SharedPreferences.getInstance();
                 prefs.setString('OrderNumber', OrderNumber);
-                Navigator.pushAndRemoveUntil(context,  PageRouteBuilder(
-                  transitionsBuilder:
-                      (context, animation, animationTime, child) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    );
-                  },
-                  pageBuilder: (context, animation, animationTime) {
-                    return HomePage();
-                  },
-                ), (route) => false);
+                Navigator.pop(context);
               },
             ),
             SizedBox(
