@@ -3,6 +3,7 @@ import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'COD_Loading.dart';
 
@@ -12,8 +13,24 @@ class CODPage extends StatefulWidget {
 }
 
 class _CODPageState extends State<CODPage> {
+
+  double productprice;
+  int productquantity;
+
+
+  getProductData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      productprice = prefs.getDouble('productprice');
+      productquantity = prefs.getInt('productquantity');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getProductData();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -102,7 +119,7 @@ class _CODPageState extends State<CODPage> {
               height: 20,
             ),
             Text(
-              'Your Total Order Amount is: (Price)',
+              'Your Total Order Amount is: \$ ${productprice * productquantity}',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w600,

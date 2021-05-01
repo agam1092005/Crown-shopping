@@ -6,7 +6,6 @@ import 'package:crown_shopping/Men/mens_listview_page.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Profile%20Page/google_Profile_page.dart';
 import 'package:crown_shopping/Senakers/shoe_listview_page.dart';
-import 'package:crown_shopping/Shopping%20Cart/cart.dart';
 import 'package:crown_shopping/Women/womens_listview_page.dart';
 import 'package:crown_shopping/jackets/jackets_listview_page.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
@@ -27,7 +26,6 @@ class _GoogleHomePageState extends State<GoogleHomePage> with TickerProviderStat
   List<Widget> _pages = [
     Home(),
     CategoryPage(),
-    ShoppingCart(),
     GoogleProfilePage(),
   ];
 
@@ -385,11 +383,6 @@ class _GoogleHomePageState extends State<GoogleHomePage> with TickerProviderStat
                   icon: Icon(Icons.category_sharp),
                   // ignore: deprecated_member_use
                   title: Text('Category'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart_outlined),
-                  // ignore: deprecated_member_use
-                  title: Text('Cart'),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline_sharp),

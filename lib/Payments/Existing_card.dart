@@ -1,8 +1,9 @@
-import 'package:crown_shopping/Checkout/thank_you_page.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Payments/Payment-services.dart';
+import 'package:crown_shopping/home/Home_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ExistingCardPage extends StatefulWidget {
   @override
@@ -10,8 +11,25 @@ class ExistingCardPage extends StatefulWidget {
 }
 
 class _ExistingCardPageState extends State<ExistingCardPage> {
+
+  double productprice;
+  int productquantity;
+
+  getProductData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      productprice = prefs.getDouble('productprice');
+      productquantity = prefs.getInt('productquantity');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    setState(() {
+      getProductData();
+    });
+
     // ignore: non_constant_identifier_names
     PayViaExistingCard(BuildContext context) {
       var response = StripeService.PayViaExistingCard(
@@ -27,8 +45,7 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
               ),
             )
             .closed
-            .then(
-              (_) =>   Navigator.pushReplacement(
+            .then((_) => Navigator.pushAndRemoveUntil(
                 context,
                 PageRouteBuilder(
                   transitionsBuilder:
@@ -39,11 +56,10 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                     );
                   },
                   pageBuilder: (context, animation, animationTime) {
-                    return ThankYouPage();
+                    return HomePage();
                   },
                 ),
-              ),
-        );
+                (route) => false));
       }
     }
 
@@ -132,7 +148,7 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                     elevation: 1,
                     buttonPadding: EdgeInsets.symmetric(horizontal: 20),
                     content: Text(
-                        'Confirm the payment to pay via Existing card. Money shall not be refunded under some circumstances.'),
+                        'Confirm the payment to pay \$${productprice * productquantity} via Existing card. Money shall not be refunded under some circumstances.'),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -169,9 +185,23 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                   obscureCardNumber: true,
                   cardNumber: '4242424242424242',
                   expiryDate: '04/24',
-                  cardHolderName: 'Agam',
+                  cardHolderName: 'NAME',
                   cvvCode: '424',
                   showBackView: false),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'This card is for Testing purpose, hence will not work in real life.',
+              style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Inconsolata'),
+            ),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),

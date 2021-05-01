@@ -2,6 +2,7 @@ import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:crown_shopping/Others/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WalletPayment extends StatefulWidget {
   @override
@@ -9,8 +10,23 @@ class WalletPayment extends StatefulWidget {
 }
 
 class _WalletPaymentState extends State<WalletPayment> {
+
+  double productprice;
+  int productquantity;
+
+  getProductData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      productprice = prefs.getDouble('productprice');
+      productquantity = prefs.getInt('productquantity');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getProductData();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -114,6 +130,30 @@ class _WalletPaymentState extends State<WalletPayment> {
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: Colors.black54),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Align(
+              child: Text(
+                'Shipping Fee: FREE',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              ),
+              alignment: Alignment.bottomRight,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Align(
+              child: Text(
+                'AMOUNT: \$ ${productprice * productquantity}',
+                style: DrawerTextStyle,
+              ),
+              alignment: Alignment.bottomRight,
             ),
             SizedBox(
               height: 40,

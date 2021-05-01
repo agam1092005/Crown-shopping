@@ -465,29 +465,6 @@ Widget _buildBackground(int index, double width) {
               ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Bgcolor.deepred,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                ),
-              ),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     ),

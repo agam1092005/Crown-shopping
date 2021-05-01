@@ -8,7 +8,6 @@ import 'package:crown_shopping/Senakers/shoe_listview_page.dart';
 import 'package:crown_shopping/Women/womens_listview_page.dart';
 import 'package:crown_shopping/jackets/jackets_listview_page.dart';
 import 'package:crown_shopping/settings/settings_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../OTHERS/app_clipper.dart';
 import 'womens_details_page.dart';
 import 'womens_model.dart';
@@ -464,34 +463,6 @@ Widget _buildBackground(int index, double width) {
               ],
             ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Bgcolor.deepred,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                ),
-              ),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setString('productname', womenList[index].name);
-                    prefs.setString('productprice', womenList[index].price.toString());
-                  },
-                  child: Icon(
-                    Icons.add,
-                    size: 40,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     ),

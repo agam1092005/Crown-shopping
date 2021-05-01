@@ -1,6 +1,8 @@
+import 'package:crown_shopping/Checkout/checkout_loading1.dart';
 import 'package:crown_shopping/Others/app_clipper.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'converse_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -172,21 +174,44 @@ class _DetailPageState extends State<ConverseDetailPage> {
               ),
             ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 50,
-            ),
-            decoration: BoxDecoration(
-              color: Bgcolor.deepred,
-              borderRadius: BorderRadius.all(
-                Radius.circular(50),
+          GestureDetector(
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('productname', widget.converseModel.name);
+              prefs.setString('productimage', widget.converseModel.imgPath.toString());
+              prefs.setDouble('productprice', widget.converseModel.price);
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  transitionsBuilder:
+                      (context, animation, animationTime, child) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    );
+                  },
+                  pageBuilder: (context, animation, animationTime) {
+                    return CheckoutLoading1();
+                  },
+                ),
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 50,
               ),
-            ),
-            child: Text(
-              "ADD CART",
-              style: TextStyle(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Bgcolor.deepred,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                ),
+              ),
+              child: Text(
+                "CHECKOUT",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

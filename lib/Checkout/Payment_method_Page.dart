@@ -31,10 +31,28 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     });
   }
 
+  String productname = '';
+  double productprice;
+  String productimage = '';
+  int productquantity;
+  String productsize = '';
+
+  getProductData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      productname = prefs.getString('productname');
+      productprice = prefs.getDouble('productprice');
+      productimage = prefs.getString('productimage');
+      productquantity = prefs.getInt('productquantity');
+      productsize = prefs.getString('productsize');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     setState(() {
       getdetailsData();
+      getProductData();
     });
     return SafeArea(
       child: Scaffold(
@@ -126,7 +144,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   height: 20,
                 ),
                 Text(
-                  'Ordering Items',
+                  'Ordering Item',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
@@ -136,7 +154,70 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   height: 10,
                 ),
                 Container(
-                  height: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.contain,
+                            alignment: Alignment.center,
+                            image: AssetImage(
+                              'images/$productimage',
+                            ),
+                          ),
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '$productname',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            Text(
+                              'Price: ${productprice * productquantity}',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              'Quantity: ${productquantity.toString()}',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              'Size: $productsize',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                   padding: EdgeInsets.all(16),
                   width: double.maxFinite,
                   decoration: BoxDecoration(
@@ -236,8 +317,8 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                             Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
-                                transitionsBuilder: (context, animation,
-                                    animationTime, child) {
+                                transitionsBuilder:
+                                    (context, animation, animationTime, child) {
                                   return FadeTransition(
                                     opacity: animation,
                                     child: child,
@@ -286,8 +367,8 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                             Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
-                                transitionsBuilder: (context, animation,
-                                    animationTime, child) {
+                                transitionsBuilder:
+                                    (context, animation, animationTime, child) {
                                   return FadeTransition(
                                     opacity: animation,
                                     child: child,
@@ -336,8 +417,8 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                             Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
-                                transitionsBuilder: (context, animation,
-                                    animationTime, child) {
+                                transitionsBuilder:
+                                    (context, animation, animationTime, child) {
                                   return FadeTransition(
                                     opacity: animation,
                                     child: child,
@@ -374,11 +455,25 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   height: 40,
                 ),
                 Align(
-                  alignment: Alignment.bottomRight,
                   child: Text(
-                    'Amount: (price)',
+                    'Shipping Fee: FREE',
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                    ),
+                  ),
+                  alignment: Alignment.bottomRight,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  child: Text(
+                    'AMOUNT: \$ ${productprice * productquantity}',
                     style: DrawerTextStyle,
                   ),
+                  alignment: Alignment.bottomRight,
                 ),
                 SizedBox(
                   height: 40,
