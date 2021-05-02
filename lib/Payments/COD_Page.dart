@@ -100,7 +100,7 @@ class _CODPageState extends State<CODPage> {
                   color: Colors.yellow,
                 ),
                 title: Text(
-                  "Due to then COVID - 19 pandemic, we do not recommend 'Cash on Delivery (COD)' service. As exchange of Cash may lead to spread of virus, we however take full precaution and measures along with Contact-less Delivery. We may also block the service of 'Cash on Delivery (COD)' if there is any government instructions.",
+                  "Due to the COVID - 19 pandemic, we do not recommend 'Cash on Delivery (COD)' service. As exchange of Cash may lead to spread of virus, we however take full precautions and measures along with Contact-less Delivery. We may also block the service of 'Cash on Delivery (COD)' if there is any government instructions.",
                   style: TextStyle(
                       fontSize: 16,
                       color: Colors.black54,
@@ -140,6 +140,12 @@ class _CODPageState extends State<CODPage> {
             ),
             RoundedButton(
               onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Transaction successful'),
+                    duration: Duration(milliseconds: 1000),
+                  ),
+                );
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
@@ -158,6 +164,21 @@ class _CODPageState extends State<CODPage> {
               width: double.maxFinite,
               height: MediaQuery.of(context).size.height * 0.05,
               title: 'PLACE ORDER',
+              style: AlertTextStyle,
+            ),
+            RoundedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Transaction cancelled'),
+                    duration: Duration(milliseconds: 1000),
+                  ),
+                );
+              },
+              width: double.maxFinite,
+              height: MediaQuery.of(context).size.height * 0.05,
+              title: 'CANCEL',
               style: AlertTextStyle,
             ),
             SizedBox(

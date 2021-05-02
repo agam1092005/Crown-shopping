@@ -340,18 +340,18 @@ class _WalletPageState extends State<WalletPage> {
                 children: [
                   Text(
                     '10.00  ',
-                    style: TextStyle(fontSize: 60, color: Colors.black),
+                    style: TextStyle(fontSize: 50, color: Colors.black),
                   ),
                   Text(
                     '\$',
-                    style: TextStyle(fontSize: 30, color: Colors.black54),
+                    style: TextStyle(fontSize: 20, color: Colors.black54),
                   ),
                 ],
               ),
               Text(
                 'My balance',
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.black45,
                     fontWeight: FontWeight.w500),
               ),
@@ -508,7 +508,7 @@ class _WalletPageState extends State<WalletPage> {
               Text(
                 'OFFERS',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 30,
                   color: Colors.black,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 1.5,

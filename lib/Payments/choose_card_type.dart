@@ -1,6 +1,6 @@
-import 'package:crown_shopping/Checkout/thank_you_page.dart';
 import 'package:crown_shopping/Others/Constants.dart';
 import 'package:crown_shopping/Others/bgcolor.dart';
+import 'package:crown_shopping/Payments/COD_Loading.dart';
 import 'package:crown_shopping/Payments/Existing_card.dart';
 import 'package:crown_shopping/Payments/Payment-services.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,30 +43,38 @@ class _ChooseCardTypeState extends State<ChooseCardType> {
         amount: '20000',
         currency: 'USD',
       );
-      ScaffoldMessenger.of(context)
-          .showSnackBar(
-            SnackBar(
-              content: Text(response.message),
-              duration: Duration(milliseconds: 1000),
-            ),
-          )
-          .closed
-          .then(
-            (_) => Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                transitionsBuilder: (context, animation, animationTime, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                pageBuilder: (context, animation, animationTime) {
-                  return ThankYouPage();
-                },
-              ),
-            ),
-          );
+      if (response.success == true) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
+          SnackBar(
+            content: Text(response.message),
+            duration: Duration(milliseconds: 1000),
+          ),
+        );
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            transitionsBuilder: (context, animation, animationTime, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            pageBuilder: (context, animation, animationTime) {
+              return CODloading();
+            },
+          ),
+        );
+      } else if (response.success == false) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
+          SnackBar(
+            content: Text(response.message),
+            duration: Duration(milliseconds: 1000),
+          ),
+        );
+        Navigator.pop(context);
+      }
     }
 
     return SafeArea(

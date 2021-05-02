@@ -209,11 +209,13 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                     height: MediaQuery.of(context).size.height * 0.05,
                     onPressed: () async {
                       _formkey.currentState.validate();
+                      try {
                         final newUser =
-                            await _auth.createUserWithEmailAndPassword(
-                                email: email, password: password);
+                        await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
                         if (newUser != null) {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs = await SharedPreferences
+                              .getInstance();
                           prefs.setString('displayemail', newUser.user.email);
                           prefs.setString('email', emailcontroller.text);
                           Navigator.pushReplacement(
@@ -228,12 +230,23 @@ class _SignUpScreenState extends State<SignUpScreen2> {
                               },
                               pageBuilder: (context, animation, animationTime) {
                                 return LoadingScreen();
-
                               },
                             ),
                           );
                           _shownotification();
                         }
+                      } catch (e)  {
+                        if (e != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(milliseconds: 1200),
+                              content: Text(
+                                'User cannot be created or User already exist',
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     }),
                 SizedBox(
                   height: 20,

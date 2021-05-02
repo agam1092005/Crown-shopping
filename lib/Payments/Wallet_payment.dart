@@ -161,6 +161,12 @@ class _WalletPaymentState extends State<WalletPayment> {
             RoundedButton(
               onPressed: () {
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Transaction cancelled'),
+                  duration: Duration(milliseconds: 1000),
+                ),
+              );
               },
               width: double.maxFinite,
               height: MediaQuery.of(context).size.height * 0.05,

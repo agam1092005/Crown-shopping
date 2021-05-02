@@ -179,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     onPressed: () async {
                       if (_formkey.currentState.validate()) {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           PageRouteBuilder(
                             transitionsBuilder:

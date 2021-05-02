@@ -156,6 +156,7 @@ class _ExistingCardPageState extends State<ExistingCardPage> {
                               duration: Duration(milliseconds: 1000),
                             ),
                           );
+                          Navigator.pop(context);
                         },
                         child: Text(
                           'Cancel',

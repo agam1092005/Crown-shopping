@@ -83,7 +83,7 @@ class _ThankYouPageState extends State<ThankYouPage> {
             Text(
               'Thank You for placing an order from Crown Shopping',
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 22,
                   fontWeight: FontWeight.w900,
                   color: Colors.black,
                   fontFamily: 'PollerOne'),
@@ -101,7 +101,7 @@ class _ThankYouPageState extends State<ThankYouPage> {
               height: 10,
             ),
             Text(
-              'Your will be shipped in next 2-3 working days.',
+              'Your Order will be shipped in next 2-3 working days.',
               style: TextStyle(
                   fontSize: 20, color: Colors.black54, fontFamily: 'Inconsolata'),
             ),

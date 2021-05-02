@@ -65,7 +65,7 @@ class _PreviousOrderState extends State<PreviousOrder> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w800,
-                fontSize: 28,
+                fontSize: 24,
               ),
             ),
             SizedBox(
