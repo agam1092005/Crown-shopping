@@ -79,6 +79,7 @@ class _SplashStartScreenState extends State<SplashStartScreen>
     });
   }
 
+
   getvalidation() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // ignore: non_constant_identifier_names
