@@ -1,4 +1,4 @@
-##CROWN SHOPPING APP
+## CROWN SHOPPING APP
 
 ●	Developed a dynamic shopping application and implemented core e-commerce features, cart management and order processing.
 ●	Leveraged Google Firebase services for authentication and scalable data management.
