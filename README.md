@@ -8,18 +8,18 @@
 
 <img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/b0ec3cb0-2308-4523-92ea-16a28439c09a" height="20%" width="30%">
 
-![WhatsApp Image 2024-01-03 at 14 14 24 (1)](https://github.com/agam1092005/Crown-shopping/assets/70815441/3026e4b1-cabd-4413-82bb-d15a4ee72c0f)
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/3026e4b1-cabd-4413-82bb-d15a4ee72c0f" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 24](https://github.com/agam1092005/Crown-shopping/assets/70815441/a772720c-8505-48a8-adc9-bc89e93632f3) 
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/a772720c-8505-48a8-adc9-bc89e93632f3" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 23](https://github.com/agam1092005/Crown-shopping/assets/70815441/eead517e-ec3a-4944-b9d7-23d0b3558aed)
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/eead517e-ec3a-4944-b9d7-23d0b3558aed" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 22 (1)](https://github.com/agam1092005/Crown-shopping/assets/70815441/730f2b9a-90b0-4e2b-afb0-03fbc631dbb0) 
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/730f2b9a-90b0-4e2b-afb0-03fbc631dbb0" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 23 (2)](https://github.com/agam1092005/Crown-shopping/assets/70815441/bad44ac5-ff4e-4b00-bcb0-09d029ab79c4)
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/bad44ac5-ff4e-4b00-bcb0-09d029ab79c4" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 22](https://github.com/agam1092005/Crown-shopping/assets/70815441/9177123a-ceea-4afa-9ec5-61cfa4ebef8d) 
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/9177123a-ceea-4afa-9ec5-61cfa4ebef8d" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 23 (1)](https://github.com/agam1092005/Crown-shopping/assets/70815441/f5a417f9-87fa-4420-99aa-9b09de3bee1b)
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/f5a417f9-87fa-4420-99aa-9b09de3bee1b" width="30%" height="20%">
 
-![WhatsApp Image 2024-01-03 at 14 14 21](https://github.com/agam1092005/Crown-shopping/assets/70815441/8063b7d8-6396-45f5-8cb2-6159e360507f)
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/8063b7d8-6396-45f5-8cb2-6159e360507f" width="30%" height="20%">
