@@ -6,7 +6,7 @@
 ●	Integrated the Stripe API for a secure and reliable payment gateway, ensuring smooth and protected transactions.
 
 
-<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/b0ec3cb0-2308-4523-92ea-16a28439c09a" height="50%">
+<img src="https://github.com/agam1092005/Crown-shopping/assets/70815441/b0ec3cb0-2308-4523-92ea-16a28439c09a" height="20%">
 
 ![WhatsApp Image 2024-01-03 at 14 14 24 (1)](https://github.com/agam1092005/Crown-shopping/assets/70815441/3026e4b1-cabd-4413-82bb-d15a4ee72c0f)
 
